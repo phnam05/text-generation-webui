@@ -68,7 +68,9 @@ def list_model_elements():
         'no_mmap',
         'low_vram',
         'mlock',
+        'mul_mat_q',
         'n_gpu_layers',
+        'tensor_split',
         'n_ctx',
         'n_gqa',
         'rms_norm_eps',
@@ -178,7 +180,7 @@ def apply_interface_values(state, use_persistent=False):
         return [state[k] if k in state else gr.update() for k in elements]
 
 
-def save_settings(state, preset, instruction_template, extensions):
+def save_settings(state, preset, instruction_template, extensions, show_controls):
     output = copy.deepcopy(shared.settings)
     exclude = ['name1', 'name2', 'greeting', 'context', 'turn_template']
     for k in state:
@@ -192,6 +194,7 @@ def save_settings(state, preset, instruction_template, extensions):
     output['instruction_template'] = instruction_template
     output['default_extensions'] = extensions
     output['seed'] = int(output['seed'])
+    output['show_controls'] = show_controls
 
     return yaml.dump(output, sort_keys=False, width=float("inf"))
 
